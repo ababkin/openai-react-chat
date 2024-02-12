@@ -37,7 +37,7 @@ export class ChatService {
         let endpoint = CHAT_COMPLETIONS_ENDPOINT;
         let headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${OPENAI_API_KEY}`
+            // "Authorization": `Bearer ${OPENAI_API_KEY}`
         };
 
         // Map to a new array with the messageType removed
@@ -46,6 +46,7 @@ export class ChatService {
 
         const requestBody: any = {
             model: modelId,
+            use_context: true,
             messages: messagesWithoutMessageType,
         };
         if (CHAT_PARAMETERS.temperature) {
@@ -68,10 +69,11 @@ export class ChatService {
 
     static async sendMessageStreamed(messages: ChatMessage[], modelId: string, callback: (content: string) => void): Promise<any> {
         this.abortController = new AbortController();
-        let endpoint = "https://api.openai.com/v1/chat/completions";
+        // let endpoint = "https://api.openai.com/v1/chat/completions";
+        let endpoint = "http://localhost:8001/v1/chat/completions";
         let headers = {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${OPENAI_API_KEY}`
+            // "Authorization": `Bearer ${OPENAI_API_KEY}`
         };
 
         // Map to a new array with the messageType removed
@@ -81,6 +83,7 @@ export class ChatService {
         const requestBody: any = {
             model: modelId,
             messages: messagesWithoutMessageType,
+            use_context: true,
             stream: true,
         };
         if (CHAT_PARAMETERS.temperature) {

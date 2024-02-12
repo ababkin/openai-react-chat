@@ -24,31 +24,39 @@ const Chat: React.FC<Props> = ({chatBlocks, onChatScroll, allowAutoScroll}) => {
 
     useEffect(() => {
 
-        if (OPENAI_MODEL_LIST && OPENAI_MODEL_LIST.length > 0) {
-            setModels(OPENAI_MODEL_LIST.map(id => {
-                  return {
-                      id: id,
+        setModels([ { id: 'private-gpt',
                       object: 'model',
                       context_window: 0,
                       knowledge_cutoff: '',
                       owned_by: 'not-set',
                       permission: []
-                  } as OpenAIModel;
-              })
-            );
-        } else {
-            ChatService.fetchModels()
-              .then(fetchedModels => {
-                  setModels(fetchedModels);
-              })
-              .catch(err => {
-                  if (err && err.message) {
-                      setError(err.message);
-                  } else {
-                      setError('Error fetching model list');
-                  }
-              });
-        }
+                    } as OpenAIModel ]);
+
+        // if (OPENAI_MODEL_LIST && OPENAI_MODEL_LIST.length > 0) {
+        //     setModels(OPENAI_MODEL_LIST.map(id => {
+        //           return {
+        //               id: id,
+        //               object: 'model',
+        //               context_window: 0,
+        //               knowledge_cutoff: '',
+        //               owned_by: 'not-set',
+        //               permission: []
+        //           } as OpenAIModel;
+        //       })
+        //     );
+        // } else {
+        //     ChatService.fetchModels()
+        //       .then(fetchedModels => {
+        //           setModels(fetchedModels);
+        //       })
+        //       .catch(err => {
+        //           if (err && err.message) {
+        //               setError(err.message);
+        //           } else {
+        //               setError('Error fetching model list');
+        //           }
+        //       });
+        // }
     }, []);
 
     useEffect(() => {
